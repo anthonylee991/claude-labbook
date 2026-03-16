@@ -1,0 +1,123 @@
+/** File extension → language mapping */
+const EXT_MAP: Record<string, string> = {
+  ".ts": "typescript",
+  ".tsx": "typescript",
+  ".js": "javascript",
+  ".jsx": "javascript",
+  ".mjs": "javascript",
+  ".cjs": "javascript",
+  ".py": "python",
+  ".go": "go",
+  ".rs": "rust",
+  ".java": "java",
+  ".kt": "kotlin",
+  ".kts": "kotlin",
+  ".cs": "csharp",
+  ".rb": "ruby",
+  ".php": "php",
+  ".swift": "swift",
+  ".c": "c",
+  ".h": "c",
+  ".cpp": "cpp",
+  ".hpp": "cpp",
+  ".cc": "cpp",
+  ".scala": "scala",
+  ".sh": "shell",
+  ".bash": "shell",
+  ".zsh": "shell",
+  ".sql": "sql",
+  ".r": "r",
+  ".R": "r",
+  ".lua": "lua",
+  ".dart": "dart",
+  ".ex": "elixir",
+  ".exs": "elixir",
+  ".erl": "erlang",
+  ".hs": "haskell",
+  ".ml": "ocaml",
+  ".clj": "clojure",
+  ".yaml": "yaml",
+  ".yml": "yaml",
+  ".toml": "toml",
+  ".json": "json",
+  ".xml": "xml",
+  ".html": "html",
+  ".htm": "html",
+  ".css": "css",
+  ".scss": "scss",
+  ".less": "less",
+  ".md": "markdown",
+  ".mdx": "markdown",
+  ".vue": "vue",
+  ".svelte": "svelte",
+  ".astro": "astro",
+  ".tf": "terraform",
+  ".hcl": "hcl",
+  ".proto": "protobuf",
+  ".graphql": "graphql",
+  ".gql": "graphql",
+};
+
+/** Extensions that indicate binary/non-text files to skip */
+const BINARY_EXTENSIONS = new Set([
+  ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".ico", ".svg", ".webp",
+  ".mp3", ".mp4", ".wav", ".avi", ".mov", ".mkv",
+  ".zip", ".tar", ".gz", ".bz2", ".7z", ".rar",
+  ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx",
+  ".exe", ".dll", ".so", ".dylib", ".o", ".a",
+  ".woff", ".woff2", ".ttf", ".eot", ".otf",
+  ".pyc", ".pyo", ".class", ".jar",
+  ".node", ".wasm",
+  ".db", ".sqlite", ".sqlite3",
+  ".DS_Store",
+]);
+
+/** Directories to always ignore (beyond .gitignore) */
+export const ALWAYS_IGNORE_DIRS = [
+  "node_modules",
+  ".git",
+  "dist",
+  "build",
+  "out",
+  ".next",
+  ".nuxt",
+  ".svelte-kit",
+  "__pycache__",
+  ".pytest_cache",
+  ".mypy_cache",
+  "venv",
+  ".venv",
+  "env",
+  ".env",
+  ".tox",
+  "coverage",
+  ".nyc_output",
+  ".claude/labbook",
+  "vendor",
+  "target",
+  ".gradle",
+  "bin",
+  "obj",
+];
+
+/** File patterns to always ignore */
+export const ALWAYS_IGNORE_FILES = [
+  "*.lock",
+  "*.lockb",
+  "package-lock.json",
+  "yarn.lock",
+  "pnpm-lock.yaml",
+  "*.min.js",
+  "*.min.css",
+  "*.map",
+  "*.chunk.*",
+  "*.bundle.*",
+];
+
+export function detectLanguage(ext: string): string | null {
+  return EXT_MAP[ext.toLowerCase()] ?? null;
+}
+
+export function isBinaryExtension(ext: string): boolean {
+  return BINARY_EXTENSIONS.has(ext.toLowerCase());
+}

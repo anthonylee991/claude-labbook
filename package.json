@@ -1,0 +1,56 @@
+{
+  "name": "claude-labbook",
+  "version": "0.1.0",
+  "description": "MCP server — persistent experiment tracking and semantic code search for AI coding agents",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "claude-labbook": "dist/index.js"
+  },
+  "files": [
+    "dist/",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js"
+  },
+  "keywords": [
+    "mcp",
+    "claude",
+    "experiment-tracking",
+    "ai-agents",
+    "code-search",
+    "semantic-search",
+    "graph-database",
+    "vector-search",
+    "model-context-protocol"
+  ],
+  "author": "Anthony Lee <anthony@anthonylee991.com>",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/anthonylee991/claude-labbook",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anthonylee991/claude-labbook.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anthonylee991/claude-labbook/issues"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.1",
+    "kuzu": "^0.11.3",
+    "@lancedb/lancedb": "^0.26.2",
+    "fastembed": "^2.1.0",
+    "ignore": "^7.0.4",
+    "apache-arrow": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

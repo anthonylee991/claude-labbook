@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+*.tsbuildinfo
+
+# LabBook data (generated per-project)
+data/
+local_cache/
+
+# Claude Code
+.claude/labbook/
+.claude/experiment_log.md
+.claude/settings.local.json
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*
+
+# Logs
+*.log
+
+# Test / Coverage
+coverage/
+.nyc_output/
+
+# npm
+*.tgz
