@@ -81,6 +81,10 @@ claude mcp add labbook -s user -- npx claude-labbook
 
 See the [MCP Setup Guide](docs/MCP.md) for detailed instructions for Claude Code, Claude Desktop, Cursor, Windsurf, and other MCP-compatible editors.
 
+### Agent Instructions (Important)
+
+LabBook works best when the agent is told *when* to call each tool. Add instructions to your system prompt or `CLAUDE.md` file — see [Agent Instructions](docs/MCP.md#agent-instructions) for a ready-to-use example.
+
 ## Tools
 
 LabBook exposes 12 MCP tools:

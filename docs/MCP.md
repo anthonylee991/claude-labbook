@@ -11,6 +11,7 @@ Claude LabBook is an [MCP (Model Context Protocol)](https://modelcontextprotocol
 - [Cursor](#cursor)
 - [Windsurf](#windsurf)
 - [Other MCP-Compatible Editors](#other-mcp-compatible-editors)
+- [Agent Instructions](#agent-instructions)
 - [Verifying the Connection](#verifying-the-connection)
 - [Troubleshooting](#troubleshooting)
 
@@ -138,6 +139,77 @@ For any editor that supports MCP servers via stdio, the configuration pattern is
 ```
 
 The server communicates over stdin/stdout using the MCP protocol. No HTTP server, no ports, no configuration needed.
+
+---
+
+## Agent Instructions
+
+Installing the MCP server gives your agent access to LabBook's tools, but the agent won't know *when* to call them without instructions. Add the following to your system prompt or instructions file to get the most out of LabBook.
+
+### Where to put instructions
+
+| Editor | File | Scope |
+|--------|------|-------|
+| Claude Code | `~/.claude/CLAUDE.md` | Global (all projects) |
+| Claude Code | `CLAUDE.md` in project root | Per-project |
+| Cursor | Cursor Settings > Rules | Global or per-project |
+| Windsurf | Windsurf Settings > AI Rules | Global |
+| Other | Your editor's system prompt config | Varies |
+
+### Example instructions
+
+Copy and paste this into your instructions file. Adjust tool name prefixes if your editor uses a different convention (Claude Code uses `mcp__labbook__` prefix automatically).
+
+```markdown
+## Experiment Tracking (LabBook)
+
+LabBook is a persistent experiment log. It survives context compaction and
+prevents repeating failed approaches. Use it for ALL code changes.
+
+### Files to Read First
+- ALWAYS read `.claude/experiment_log.md` before starting any work (if it exists)
+
+### Required Tool Usage
+- At conversation start or after any context gap: call `get_briefing`
+- At conversation start (if not recently scanned): call `scan_codebase` to ensure the code index is current
+- Before reverting ANY change: call `check_before_change` for that component
+- Before modifying a component with known prior trials: call `check_before_change`
+- When looking for code by functionality (not filename): call `search_code`
+- After testing ANY code change (pass or fail): call `log_trial` with the outcome
+- When you discover a machine-specific detail (commands, paths, ports): call `log_env_fact`
+- When making an architectural/strategic decision: call `log_decision`
+- Never revert a change without confirming the revert target wasn't a previous failure
+
+### Session Management
+- If no active session exists for the current work, call `start_session`
+- When a problem is fully solved, call `resolve_session` with what worked
+```
+
+### What each instruction does
+
+| Instruction | Why it matters |
+|-------------|----------------|
+| Read `experiment_log.md` first | Gives the agent immediate context without a tool call — the file is auto-generated |
+| `get_briefing` at start | Recovers full context after compaction or new conversation |
+| `scan_codebase` at start | Ensures the semantic code index is up to date |
+| `check_before_change` before modifying | Prevents repeating failed approaches — the core value of LabBook |
+| `log_trial` after every test | Builds the history that `check_before_change` relies on |
+| `log_env_fact` for machine details | Persists things like `python_cmd=python3` across conversations |
+| `log_decision` for architecture | Records *why* choices were made, not just what was done |
+| `start_session` / `resolve_session` | Groups related trials so briefings stay organized |
+
+### Minimal version
+
+If you prefer fewer rules, this is the bare minimum that still provides value:
+
+```markdown
+## Experiment Tracking (LabBook)
+- Read `.claude/experiment_log.md` at the start of every task
+- Call `get_briefing` after any context gap
+- Call `check_before_change` before modifying code that may have prior trial history
+- Call `log_trial` after testing any code change (pass or fail)
+- Call `start_session` when beginning work on a new problem
+```
 
 ---
 
