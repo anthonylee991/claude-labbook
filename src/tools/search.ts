@@ -1,6 +1,6 @@
-import { query } from "../db/kuzu.js";
-import { getCodeTable } from "../db/lance.js";
-import { embed } from "../embeddings.js";
+import { query } from "../ipc/proxy-kuzu.js";
+import { getCodeTable } from "../ipc/proxy-lance.js";
+import { embed } from "../ipc/proxy-embed.js";
 
 export async function searchCode(args: {
   query: string;

@@ -1,6 +1,6 @@
-import { query } from "../db/kuzu.js";
-import { nextId } from "../db/ids.js";
-import { regenerateSummary } from "../summary.js";
+import { query } from "../ipc/proxy-kuzu.js";
+import { nextId } from "../ipc/proxy-ids.js";
+import { regenerateSummary } from "../ipc/proxy-summary.js";
 
 export async function logEnvFact(args: {
   key: string;

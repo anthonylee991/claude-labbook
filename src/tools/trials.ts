@@ -1,8 +1,8 @@
-import { query } from "../db/kuzu.js";
-import { nextId } from "../db/ids.js";
-import { getTrialTable } from "../db/lance.js";
-import { embed } from "../embeddings.js";
-import { regenerateSummary } from "../summary.js";
+import { query } from "../ipc/proxy-kuzu.js";
+import { nextId } from "../ipc/proxy-ids.js";
+import { getTrialTable } from "../ipc/proxy-lance.js";
+import { embed } from "../ipc/proxy-embed.js";
+import { regenerateSummary } from "../ipc/proxy-summary.js";
 
 async function findOrCreateComponent(name: string, componentType: string): Promise<number> {
   const existing = await query(

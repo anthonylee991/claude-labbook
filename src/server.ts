@@ -4,10 +4,7 @@ import { execSync } from "node:child_process";
 import { mkdir } from "node:fs/promises";
 import { join, basename } from "node:path";
 
-import { initKuzu } from "./db/kuzu.js";
-import { initLance } from "./db/lance.js";
-import { initIds } from "./db/ids.js";
-import { initSummary, regenerateSummary } from "./summary.js";
+import { connectOrSpawn } from "./ipc/spawn.js";
 
 import { startSession, resolveSession, listSessions } from "./tools/sessions.js";
 import { logTrial, getTrialChain } from "./tools/trials.js";
@@ -38,14 +35,8 @@ export async function createServer(): Promise<Server> {
   const labbookDir = join(projectRoot, ".claude", "labbook");
   await mkdir(labbookDir, { recursive: true });
 
-  // Initialize storage
-  initIds(labbookDir);
-  await initKuzu(labbookDir);
-  await initLance(labbookDir);
-  initSummary(projectRoot);
-
-  // Generate initial summary file
-  await regenerateSummary();
+  // Connect to daemon (spawns one if not running)
+  await connectOrSpawn(labbookDir, projectRoot);
 
   const server = new Server(
     { name: "claude-labbook", version: "0.1.0" },

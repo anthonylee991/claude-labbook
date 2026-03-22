@@ -1,4 +1,4 @@
-import { buildBriefingContent } from "../summary.js";
+import { buildBriefingContent } from "../ipc/proxy-summary.js";
 
 export async function getBriefing(args: {
   max_trials_per_session?: number;

@@ -1,10 +1,10 @@
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { extname } from "node:path";
-import { query } from "../db/kuzu.js";
-import { getCodeTable } from "../db/lance.js";
-import { nextId } from "../db/ids.js";
-import { embedBatch } from "../embeddings.js";
+import { query } from "../ipc/proxy-kuzu.js";
+import { getCodeTable } from "../ipc/proxy-lance.js";
+import { nextId } from "../ipc/proxy-ids.js";
+import { embedBatch } from "../ipc/proxy-embed.js";
 import { walkProject } from "../scanner/walker.js";
 import { chunkCode } from "../scanner/chunker.js";
 import { detectLanguage } from "../scanner/languages.js";

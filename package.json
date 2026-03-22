@@ -5,7 +5,8 @@
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "claude-labbook": "dist/index.js"
+    "claude-labbook": "dist/index.js",
+    "claude-labbook-daemon": "dist/daemon/main.js"
   },
   "files": [
     "dist/",
